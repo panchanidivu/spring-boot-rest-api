@@ -35,26 +35,26 @@ public class BookController {
     BookService bookService;
 
     
-    @RequestMapping(method = RequestMethod.GET, value = "/api/all")
+    @GetMapping("/all")
     public CustomResponseEntity getAllBooks() {
         return CustomResponseEntity.builder().code(HttpStatus.OK.value())
         .status(CustomResponseStatus.SUCCESS.getStatus()).message(CustomResponseStatus.SUCCESS.getMessage())
         .data(bookService.getAllBooks()).build();
     }
-    @RequestMapping(method = RequestMethod.POST, value = "/api/add")
+    @PostMapping("/add")
     public CustomResponseEntity addBook(@ApiParam("bookDTO") @RequestBody  Book bookDTO) {
         return CustomResponseEntity.builder().code(HttpStatus.OK.value())
         .status(CustomResponseStatus.SUCCESS.getStatus()).message(CustomResponseStatus.SUCCESS.getMessage())
         .data(bookService.addBook(bookDTO)).build();
     }
-    @RequestMapping(method = RequestMethod.GET, value = "/api/getbyId")
+    @GetMapping("/getByBookId")
     public CustomResponseEntity getBookById(@ApiParam("bookId") @RequestParam String bookId) {
         return CustomResponseEntity.builder().code(HttpStatus.OK.value())
         .status(CustomResponseStatus.SUCCESS.getStatus()).message(CustomResponseStatus.SUCCESS.getMessage())
         .data(bookService.getBookById(bookId)).build();
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/api/delete")
+    @DeleteMapping("/deleteByBookId")
     public CustomResponseEntity deleteBook(@ApiParam("bookId") @RequestParam String bookId) {
         return CustomResponseEntity.builder().code(HttpStatus.OK.value())
         .status(CustomResponseStatus.SUCCESS.getStatus()).message(CustomResponseStatus.SUCCESS.getMessage())
