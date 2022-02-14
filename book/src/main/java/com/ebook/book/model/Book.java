@@ -31,24 +31,23 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Book_id")
+    @Column(name = "book_id")
     private Long bookId;
 
     @Pattern(regexp = "^[a-zA-Z]*$", message = "Only alphanumeric characters are allowed")
-    @Column(name = "Book_name",nullable = false)
+    @Column(name = "book_name",nullable = false)
     @NotBlank(message = "Book name is mandatory")
     private String bookname;
 
     @Pattern(regexp = "^[a-zA-Z]*$", message = "Only alphanumeric characters are allowed")
-    @Column(name = "Book_author_name",nullable = false)
+    @Column(name = "book_author_name",nullable = false)
     @NotBlank(message = "Book author name is required")
     private String bookauthorName;
 
-    @Column(name = "Book_total_pages",nullable = false)
+    @Column(name = "book_total_pages",nullable = false)
     private Long bookTotalPages;
 
-    @Column(name = "Book_price",nullable = false)
-    // @NotBlank(message = "Book price is required")
+    @Column(name = "book_price",nullable = false)
     private Double bookPrice;
 
     @CreationTimestamp

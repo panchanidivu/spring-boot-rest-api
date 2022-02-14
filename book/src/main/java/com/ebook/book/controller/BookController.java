@@ -13,6 +13,7 @@ import com.ebook.book.service.BookService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,7 +44,7 @@ public class BookController {
         .status(CustomResponseStatus.SUCCESS.getStatus()).message(CustomResponseStatus.SUCCESS.getMessage())
         .data(bookService.getAllBooks()).build();
     }
-    @PostMapping("/add")
+    @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public CustomResponseEntity addBook(@Valid @ApiParam("bookDTO") @RequestBody  List<BookDTO> bookDTO) {
         return CustomResponseEntity.builder().code(HttpStatus.OK.value())
         .status(CustomResponseStatus.SUCCESS.getStatus()).message(CustomResponseStatus.SUCCESS.getMessage())
