@@ -119,6 +119,14 @@ public class BookController {
         .data(bookService.getBookByBookPriceRanges(bookprice,bookprice1)).build();
     }
 
+    @GetMapping("/CountByBookAuthorName")
+    public CustomResponseEntity countByBookAuthorName(@ApiParam("bookauthorName") @RequestParam String bookauthorName) {
+        return CustomResponseEntity.builder().code(HttpStatus.OK.value())
+        .status(CustomResponseStatus.SUCCESS.getStatus()).message(CustomResponseStatus.SUCCESS.getMessage())
+        .data(bookService.countByBookAuthorName(bookauthorName)).build();
+    }
+    
+
    
    
 

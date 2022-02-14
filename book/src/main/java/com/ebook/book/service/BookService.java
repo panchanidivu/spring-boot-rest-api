@@ -206,6 +206,17 @@ public class BookService {
         }
     }
 
+    public Object countByBookAuthorName(String bookauthorName) {
+        if(bookauthorName !=null) {
+            return bookRepository.countByBookauthorName(bookauthorName);
+        }
+        else {
+            throw new CustomException("No books found", HttpStatus.NOT_FOUND.value(),HttpStatus.NOT_FOUND);
+        }
+        
+        
+    }
+
     
     
 }

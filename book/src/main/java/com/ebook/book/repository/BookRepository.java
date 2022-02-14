@@ -38,7 +38,7 @@ public interface BookRepository extends JpaRepository<Book, Long>  {
     // @Query(value = "SELECT * FROM book WHERE book_author_name = ?1 and book_name = ?2", nativeQuery = true)
     List<Book> findByBookauthorNameAndBookname(String bookauthorName, String bookname);
 
-    
+    Object countByBookauthorName(String bookauthorName);
    
     
     
