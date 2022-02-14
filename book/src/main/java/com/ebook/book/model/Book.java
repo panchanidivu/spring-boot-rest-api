@@ -37,7 +37,7 @@ public class Book {
     @Pattern(regexp = "^[a-zA-Z]*$", message = "Only alphanumeric characters are allowed")
     @Column(name = "book_name",nullable = false)
     @NotBlank(message = "Book name is mandatory")
-    private String bookname;
+    private String bookName;
 
     @Pattern(regexp = "^[a-zA-Z]*$", message = "Only alphanumeric characters are allowed")
     @Column(name = "book_author_name",nullable = false)

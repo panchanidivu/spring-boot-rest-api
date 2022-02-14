@@ -20,7 +20,7 @@ public interface BookRepository extends JpaRepository<Book, Long>  {
 
     List<Book> findByBookauthorName(String bookauthorName);
 
-    List<Book> findByBookname(String bookname);
+    List<Book> findByBookName(String bookName);
    
     @Query(value = "SELECT * FROM book WHERE book_price = ?1", nativeQuery = true)
     List<Book> findByBookPriceGreaterThan(Double bookPrice);
@@ -36,11 +36,11 @@ public interface BookRepository extends JpaRepository<Book, Long>  {
     // List<Book> findByBookauthorNameAndBookname(String bookauthorName, String bookname);
 
     // @Query(value = "SELECT * FROM book WHERE book_author_name = ?1 and book_name = ?2", nativeQuery = true)
-    List<Book> findByBookauthorNameAndBookname(String bookauthorName, String bookname);
+    List<Book> findByBookauthorNameAndBookName(String bookauthorName, String bookName);
 
     Object countByBookauthorName(String bookauthorName);
 
-    public List<Book> findByBooknameContaining(String bookname);
+    public List<Book> findByBookNameContaining(String bookName);
    
     
     

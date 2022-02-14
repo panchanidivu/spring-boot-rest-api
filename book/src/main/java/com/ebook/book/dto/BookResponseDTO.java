@@ -15,7 +15,7 @@ public class BookResponseDTO {
     private Long bookId;
 
     @ApiModelProperty(position = 1)
-    private String bookname;
+    private String bookName;
 
     @ApiModelProperty(position = 2)
     private String bookauthorName;

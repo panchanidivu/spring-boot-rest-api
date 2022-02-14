@@ -19,7 +19,7 @@ public class BookDTO {
     
     @ApiModelProperty(position = 1)
     @Pattern(regexp = "^[a-zA-Z]*$", message = "Only alphanumeric characters are allowed",groups =LevelTwoValidation.class)
-    private String bookname;
+    private String bookName;
 
     @ApiModelProperty(position = 2)
     @Pattern(regexp = "^[a-zA-Z]*$", message = "Only alphanumeric characters are allowed",groups =LevelTwoValidation.class)

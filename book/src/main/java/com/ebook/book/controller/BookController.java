@@ -78,10 +78,10 @@ public class BookController {
     }
 
     @GetMapping("/getbybookname")
-    public CustomResponseEntity getBookByBookName(@ApiParam("bookname") @RequestParam String bookname) {
+    public CustomResponseEntity getBookByBookName(@ApiParam("bookName") @RequestParam String bookName) {
         return CustomResponseEntity.builder().code(HttpStatus.OK.value())
         .status(CustomResponseStatus.SUCCESS.getStatus()).message(CustomResponseStatus.SUCCESS.getMessage())
-        .data(bookService.getBookByBookName(bookname)).build();
+        .data(bookService.getBookByBookName(bookName)).build();
     }
     @GetMapping("/getbybookPrice")
     public CustomResponseEntity getBookByBookPrice(@ApiParam("bookprice") @RequestParam Double bookprice) {

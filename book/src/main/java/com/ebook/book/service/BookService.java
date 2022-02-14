@@ -108,8 +108,8 @@ public class BookService {
 
     }
 
-    public List<BookResponseDTO> getBookByBookName(String bookname) {
-        List<Book> book =bookRepository.findByBookname(bookname);
+    public List<BookResponseDTO> getBookByBookName(String bookName) {
+        List<Book> book =bookRepository.findByBookName(bookName);
         List<BookResponseDTO> bookResponseDTOs = new ModelMapper().map(book, new TypeToken<List<BookResponseDTO>>() {}.getType());
         if(bookResponseDTOs.isEmpty()) {
             throw new CustomException("No books found", HttpStatus.NOT_FOUND.value(),HttpStatus.NOT_FOUND);
@@ -138,8 +138,8 @@ public class BookService {
         
     }
 
-    public List<BookResponseDTO> getBookByAuthorNameAndBookName(String bookauthorName, String bookname) {
-        List<Book> book =bookRepository.findByBookauthorNameAndBookname(bookauthorName, bookname);
+    public List<BookResponseDTO> getBookByAuthorNameAndBookName(String bookauthorName, String bookName) {
+        List<Book> book =bookRepository.findByBookauthorNameAndBookName(bookauthorName, bookName);
         List<BookResponseDTO> bookResponseDTOs = new ModelMapper().map(book, new TypeToken<List<BookResponseDTO>>() {}.getType());
         if(bookResponseDTOs.isEmpty()) {
             throw new CustomException("No books found", HttpStatus.NOT_FOUND.value(),HttpStatus.NOT_FOUND);
@@ -165,7 +165,7 @@ public class BookService {
             throw new CustomException("Book not found", HttpStatus.NOT_FOUND.value(),HttpStatus.NOT_FOUND);
         }
         Book book1=book.get();
-        book1.setBookname(bookDTO.getBookname());
+        book1.setBookName(bookDTO.getBookName());
         book1.setBookauthorName(bookDTO.getBookauthorName());
         book1.setBookTotalPages(bookDTO.getBookTotalPages());
         book1.setBookPrice(bookDTO.getBookPrice());
@@ -173,7 +173,7 @@ public class BookService {
         book1.setBookcreatedDate(book.get().getBookcreatedDate());
         Book book2 = bookRepository.save(book1);
 
-        bookResponseDTO.setBookname(book2.getBookname());
+        bookResponseDTO.setBookName(book2.getBookName());
         bookResponseDTO.setBookauthorName(book2.getBookauthorName());
         bookResponseDTO.setBookTotalPages(book2.getBookTotalPages());
         bookResponseDTO.setBookPrice(book2.getBookPrice());
@@ -207,8 +207,8 @@ public class BookService {
         
     }
 
-    public List<BookResponseDTO> searchByBookName(String bookname) {
-        List<Book> book =bookRepository.findByBooknameContaining(bookname);
+    public List<BookResponseDTO> searchByBookName(String bookName) {
+        List<Book> book =bookRepository.findByBookNameContaining(bookName);
         List<BookResponseDTO> bookResponseDTOs = new ModelMapper().map(book, new TypeToken<List<BookResponseDTO>>() {}.getType());
         if(bookResponseDTOs.isEmpty()) {
             throw new CustomException("No books found", HttpStatus.NOT_FOUND.value(),HttpStatus.NOT_FOUND);
