@@ -12,6 +12,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StopWatch;
 
 @Aspect
 @Component
@@ -56,7 +57,11 @@ public class Logging {
     private Object around(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         logger.info("Around method: {}",proceedingJoinPoint.getSignature().getName());
         logger.info("around execution of {}:{}", proceedingJoinPoint.getSignature().getDeclaringType(), proceedingJoinPoint);
+
+        final StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
         Object result = proceedingJoinPoint.proceed();
+        stopWatch.stop();
         logger.info("Result: {}",result);
         return result;
     }
