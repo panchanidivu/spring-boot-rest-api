@@ -125,6 +125,14 @@ public class BookController {
         .status(CustomResponseStatus.SUCCESS.getStatus()).message(CustomResponseStatus.SUCCESS.getMessage())
         .data(bookService.countByBookAuthorName(bookauthorName)).build();
     }
+
+    //Search By Book Name
+    @GetMapping("/searchByBookName")
+    public CustomResponseEntity searchByBookName(@ApiParam("bookname") @RequestParam String bookname) {
+        return CustomResponseEntity.builder().code(HttpStatus.OK.value())
+        .status(CustomResponseStatus.SUCCESS.getStatus()).message(CustomResponseStatus.SUCCESS.getMessage())
+        .data(bookService.searchByBookName(bookname)).build();
+    }
     
 
    

@@ -217,6 +217,17 @@ public class BookService {
         
     }
 
+    public List<BookResponseDTO> searchByBookName(String bookname) {
+        List<Book> book =bookRepository.findByBooknameContaining(bookname);
+        List<BookResponseDTO> bookResponseDTOs = new ModelMapper().map(book, new TypeToken<List<BookResponseDTO>>() {}.getType());
+        if(bookResponseDTOs !=null && bookResponseDTOs.size()>0) {
+            return bookResponseDTOs;
+        }
+        else {
+            throw new CustomException("No books found", HttpStatus.NOT_FOUND.value(),HttpStatus.NOT_FOUND);
+        }
+    }
+
     
     
 }

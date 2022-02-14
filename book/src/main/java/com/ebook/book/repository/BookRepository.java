@@ -39,6 +39,8 @@ public interface BookRepository extends JpaRepository<Book, Long>  {
     List<Book> findByBookauthorNameAndBookname(String bookauthorName, String bookname);
 
     Object countByBookauthorName(String bookauthorName);
+
+    public List<Book> findByBooknameContaining(String bookname);
    
     
     
