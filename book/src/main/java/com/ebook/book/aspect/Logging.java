@@ -62,6 +62,7 @@ public class Logging {
         stopWatch.start();
         Object result = proceedingJoinPoint.proceed();
         stopWatch.stop();
+        logger.info("Around method execution time: {}",stopWatch.getTotalTimeMillis());
         logger.info("Result: {}",result);
         return result;
     }
