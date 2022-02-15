@@ -9,7 +9,6 @@ import com.ebook.book.dto.AuthorNameDTO;
 import com.ebook.book.dto.BookDTO;
 import com.ebook.book.dto.BookResponseDTO;
 import com.ebook.book.model.Book;
-import com.ebook.book.repository.BookPagination;
 import com.ebook.book.repository.BookRepository;
 import com.ebook.book.response.CustomException;
 import com.ebook.book.response.ObjectMapperUtils;
@@ -34,8 +33,7 @@ public class BookService {
     @Autowired
     BookRepository bookRepository;
 
-    @Autowired
-    BookPagination bookPagination;
+    
 
     public List<BookResponseDTO>getAllBooks() {
         
