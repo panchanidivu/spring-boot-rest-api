@@ -50,23 +50,17 @@ public class BookService {
     }
 
 
-    public List<BookResponseDTO> addBook(List<BookDTO> bookDTO) {
-            List<BookResponseDTO> bookResponseDTOs = new ArrayList<>();
-            if(bookDTO !=null && bookDTO.size() > 0){
-                for(BookDTO bookDTOs : bookDTO){
-                    Book book = ObjectMapperUtils.map(bookDTOs, Book.class);
-                    book.setBookcreatedDate(new Date());
-                    book.setUpdatedDate(new Date());
-                    bookRepository.save(book);
-                    bookResponseDTOs.add(ObjectMapperUtils.map(book, BookResponseDTO.class));
-                }
-                    return bookResponseDTOs;
+    public List<BookResponseDTO> addBook(BookDTO bookDTO) {
+        List<BookResponseDTO> bookResponseDTOs = new ArrayList<>();
+        if(bookDTO !=null ){
+            Book book = ObjectMapperUtils.map(bookDTO, Book.class);
+            book.setBookcreatedDate(new Date());
+            book.setUpdatedDate(new Date());
+            bookRepository.save(book);
+            bookResponseDTOs.add(ObjectMapperUtils.map(book, BookResponseDTO.class));
+            return bookResponseDTOs;
 
-            } throw new CustomException("Book not created", HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND);
-            
-            
-            
-        
+        } throw new CustomException("Book not created", HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND); 
     }
 
     public List<BookResponseDTO> getBookById(String bookId) {
@@ -217,6 +211,6 @@ public class BookService {
         
     }
 
-    
+
     
 }

@@ -38,14 +38,14 @@ public class BookController {
     BookService bookService;
 
     
-    @GetMapping("/all")
+    @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public CustomResponseEntity getAllBooks() {
         return CustomResponseEntity.builder().code(HttpStatus.OK.value())
         .status(CustomResponseStatus.SUCCESS.getStatus()).message(CustomResponseStatus.SUCCESS.getMessage())
         .data(bookService.getAllBooks()).build();
     }
     @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public CustomResponseEntity addBook(@Valid @ApiParam("bookDTO") @RequestBody  List<BookDTO> bookDTO) {
+    public CustomResponseEntity addBook(@Valid @ApiParam("bookDTO") @RequestBody  BookDTO bookDTO) {
         return CustomResponseEntity.builder().code(HttpStatus.OK.value())
         .status(CustomResponseStatus.SUCCESS.getStatus()).message(CustomResponseStatus.SUCCESS.getMessage())
         .data(bookService.addBook(bookDTO)).build();
