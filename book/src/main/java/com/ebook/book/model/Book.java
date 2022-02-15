@@ -34,14 +34,12 @@ public class Book {
     @Column(name = "book_id")
     private Long bookId;
 
-    @Pattern(regexp = "^[a-zA-Z]*$", message = "Only alphanumeric characters are allowed")
+
     @Column(name = "book_name",nullable = false)
-    @NotBlank(message = "Book name is mandatory")
     private String bookName;
 
-    @Pattern(regexp = "^[a-zA-Z]*$", message = "Only alphanumeric characters are allowed")
+   
     @Column(name = "book_author_name",nullable = false)
-    @NotBlank(message = "Book author name is required")
     private String bookauthorName;
 
     @Column(name = "book_total_pages",nullable = false)
