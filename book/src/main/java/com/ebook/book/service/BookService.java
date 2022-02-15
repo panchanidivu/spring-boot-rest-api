@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import com.ebook.book.dto.AuthorNameDTO;
 import com.ebook.book.dto.BookDTO;
 import com.ebook.book.dto.BookResponseDTO;
 import com.ebook.book.model.Book;
@@ -212,5 +213,24 @@ public class BookService {
     }
 
 
+    public List<AuthorNameDTO> getAllBookName() {
+        List<AuthorNameDTO> authorNameDTOs = new ArrayList<>();
+        List<Book> book =bookRepository.findAll();
+        book.forEach(b->{
+            AuthorNameDTO authorNameDTO = new AuthorNameDTO();
+            authorNameDTO.setBookName(b.getBookName());
+            authorNameDTO.setBookCount(bookRepository.findByBookNameContaining(b.getBookName()).size());
+            authorNameDTOs.add(authorNameDTO);
+        });
+        // book =bookRepository.findByBookNameContaining(book.get(0).getBookName());
+        // for(Book b:book) {
+        //     AuthorNameDTO authorNameDTO = new AuthorNameDTO();
+        //     authorNameDTO.setBookName(b.getBookName());
+        //     authorNameDTO.setBookCount(bookRepository.findByBookNameContaining(b.getBookName()).size());
+        //     authorNameDTOs.add(authorNameDTO);
+
+        // }
+        return authorNameDTOs;
+    }
     
 }

@@ -47,6 +47,12 @@ public class BookController {
         .status(CustomResponseStatus.SUCCESS.getStatus()).message(CustomResponseStatus.SUCCESS.getMessage())
         .data(bookService.getAllBooks()).build();
     }
+    @GetMapping(value = "/all/sort", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CustomResponseEntity getAllBookName() {
+        return CustomResponseEntity.builder().code(HttpStatus.OK.value())
+        .status(CustomResponseStatus.SUCCESS.getStatus()).message(CustomResponseStatus.SUCCESS.getMessage())
+        .data(bookService.getAllBookName()).build();
+    }
     @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public CustomResponseEntity addBook(@Valid @ApiParam("bookDTO") @RequestBody  BookDTO bookDTO) {
         return CustomResponseEntity.builder().code(HttpStatus.OK.value())
