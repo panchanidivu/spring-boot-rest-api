@@ -12,7 +12,7 @@ import lombok.Data;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class BookResponseDTO {
     @ApiModelProperty(position = 0)
-    private Long bookId;
+    private Long BookId;
 
     @ApiModelProperty(position = 1)
     private String bookName;
