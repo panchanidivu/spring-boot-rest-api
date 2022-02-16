@@ -223,14 +223,6 @@ public class BookService {
             authorNameDTO.setBookCount(bookRepository.findByBookNameContaining(b.getBookName()).size());
             authorNameDTOs.add(authorNameDTO);
         });
-        // book =bookRepository.findByBookNameContaining(book.get(0).getBookName());
-        // for(Book b:book) {
-        //     AuthorNameDTO authorNameDTO = new AuthorNameDTO();
-        //     authorNameDTO.setBookName(b.getBookName());
-        //     authorNameDTO.setBookCount(bookRepository.findByBookNameContaining(b.getBookName()).size());
-        //     authorNameDTOs.add(authorNameDTO);
-
-        // }
         return authorNameDTOs;
     }
     
