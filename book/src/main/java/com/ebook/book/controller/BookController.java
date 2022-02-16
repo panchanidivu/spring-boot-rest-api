@@ -16,6 +16,7 @@ import com.ebook.book.response.CustomResponseEntity;
 import com.ebook.book.response.CustomResponseStatus;
 import com.ebook.book.service.BookService;
 import com.ebook.book.validation.LevelOneValidation;
+import com.ebook.book.validation.LevelTwoValidation;
 import com.ebook.book.validation.MainLevelValidation;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,20 +74,20 @@ public class BookController {
     }
 
     @DeleteMapping("/deleteByBookId")
-    public CustomResponseEntity deleteBook(@NotBlank(message="please enter the only BookId", groups = LevelOneValidation.class)@Pattern(regexp = "^[0-9]*$", message = "Only numeric characters are allowed") @ApiParam("bookId") @RequestParam String bookId) throws ParseException {
+    public CustomResponseEntity deleteBook(@NotBlank(message="please enter the only BookId", groups = LevelOneValidation.class)@Pattern(regexp = "^[0-9]*$", message = "Only numeric characters are allowed" ,groups = LevelTwoValidation.class) @ApiParam("bookId") @RequestParam String bookId) throws ParseException {
         return CustomResponseEntity.builder().code(HttpStatus.OK.value())
         .status(CustomResponseStatus.SUCCESS.getStatus()).message(CustomResponseStatus.SUCCESS.getMessage())
         .data(bookService.deleteBook(bookId)).build();
     }
     
     @DeleteMapping(value="/deletebyAuthorName", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CustomResponseEntity deleteBookByAuthorName(@NotBlank(message="please enter valid AuthoreName", groups = LevelOneValidation.class) @ApiParam("bookauthorName") @RequestParam String bookauthorName) {
+    public CustomResponseEntity deleteBookByAuthorName(@NotBlank(message="please enter valid AuthoreName", groups = LevelOneValidation.class) @ApiParam("bookauthorName") @RequestParam String bookauthorName)throws ParseException {
         return CustomResponseEntity.builder().code(HttpStatus.OK.value())
         .status(CustomResponseStatus.SUCCESS.getStatus()).message(CustomResponseStatus.SUCCESS.getMessage())
         .data(bookService.deleteBookByAuthorName(bookauthorName)).build();
     }
     @GetMapping(value = "/getbyAuthorName", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CustomResponseEntity getBookByAuthorName(@NotBlank(message="please enter valid AuthoreName", groups = LevelOneValidation.class) @ApiParam("bookauthorName") @RequestParam String bookauthorName) {
+    public CustomResponseEntity getBookByAuthorName(@NotBlank(message="please enter valid AuthoreName", groups = LevelOneValidation.class) @ApiParam("bookauthorName") @RequestParam String bookauthorName)throws ParseException {
         return CustomResponseEntity.builder().code(HttpStatus.OK.value())
         .status(CustomResponseStatus.SUCCESS.getStatus()).message(CustomResponseStatus.SUCCESS.getMessage())
         .data(bookService.getBookByAuthorName(bookauthorName)).build();
