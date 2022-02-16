@@ -1,9 +1,13 @@
 package com.ebook.book.controller;
 
+import java.text.ParseException;
 import java.util.List;
 
 import javax.validation.GroupSequence;
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import com.ebook.book.dto.BookDTO;
 import com.ebook.book.model.Book;
@@ -11,6 +15,7 @@ import com.ebook.book.response.CustomException;
 import com.ebook.book.response.CustomResponseEntity;
 import com.ebook.book.response.CustomResponseStatus;
 import com.ebook.book.service.BookService;
+import com.ebook.book.validation.LevelOneValidation;
 import com.ebook.book.validation.MainLevelValidation;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,14 +65,14 @@ public class BookController {
         .data(bookService.addBook(bookDTO)).build();
     }
     @GetMapping(value = "/getByBookId", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CustomResponseEntity getBookById(@ApiParam("bookId") @RequestParam String bookId) {
+    public CustomResponseEntity getBookById(@NotBlank(message="please enter the only BookId", groups = LevelOneValidation.class)@Pattern(regexp = "^[0-9]*$", message = "Only numeric characters are allowed") @ApiParam("bookId") @RequestParam String bookId) throws ParseException {
         return CustomResponseEntity.builder().code(HttpStatus.OK.value())
         .status(CustomResponseStatus.SUCCESS.getStatus()).message(CustomResponseStatus.SUCCESS.getMessage())
         .data(bookService.getBookById(bookId)).build();
     }
 
     @DeleteMapping("/deleteByBookId")
-    public CustomResponseEntity deleteBook(@ApiParam("bookId") @RequestParam String bookId) {
+    public CustomResponseEntity deleteBook(@NotBlank(message="please enter the only BookId", groups = LevelOneValidation.class)@Pattern(regexp = "^[0-9]*$", message = "Only numeric characters are allowed") @ApiParam("bookId") @RequestParam String bookId) throws ParseException {
         return CustomResponseEntity.builder().code(HttpStatus.OK.value())
         .status(CustomResponseStatus.SUCCESS.getStatus()).message(CustomResponseStatus.SUCCESS.getMessage())
         .data(bookService.deleteBook(bookId)).build();

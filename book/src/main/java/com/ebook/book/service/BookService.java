@@ -53,24 +53,24 @@ public class BookService {
     }
 
 
-    public List<BookResponseDTO> addBook(BookDTO bookDTO) {
-        List<BookResponseDTO> bookResponseDTOs = new ArrayList<>();
+    public String addBook(BookDTO bookDTO) {
+       
         if(bookDTO !=null ){
             Book book = ObjectMapperUtils.map(bookDTO, Book.class);
             book.setBookcreatedDate(new Date());
             book.setUpdatedDate(new Date());
             bookRepository.save(book);
-            bookResponseDTOs.add(ObjectMapperUtils.map(book, BookResponseDTO.class));
-            return bookResponseDTOs;
+            return "Book added successfully";
+            
 
         } throw new CustomException("Book not created", HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND); 
     }
 
-    public List<BookResponseDTO> getBookById(String bookId) {
+    public BookResponseDTO getBookById(String bookId) {
         
             List<Book> book =bookRepository.findByBookId(Long.valueOf(bookId));
-            List<BookResponseDTO> bookResponseDTOs = new ModelMapper().map(book, new TypeToken<List<BookResponseDTO>>() {}.getType());
-            if(bookResponseDTOs.isEmpty()) {
+            BookResponseDTO bookResponseDTOs = new ModelMapper().map(book, new TypeToken<List<BookResponseDTO>>() {}.getType());
+            if(bookResponseDTOs == null) {
                 throw new CustomException("No books found", HttpStatus.NOT_FOUND.value(),HttpStatus.NOT_FOUND);
             }
             return bookResponseDTOs;
