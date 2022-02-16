@@ -79,36 +79,31 @@ public class BookController {
     }
     
     @DeleteMapping(value="/deletebyAuthorName", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CustomResponseEntity deleteBookByAuthorName(@ApiParam("bookauthorName") @RequestParam String bookauthorName) {
+    public CustomResponseEntity deleteBookByAuthorName(@NotBlank@NotBlank(message="please enter valid AuthoreName", groups = LevelOneValidation.class) @ApiParam("bookauthorName") @RequestParam String bookauthorName) {
         return CustomResponseEntity.builder().code(HttpStatus.OK.value())
         .status(CustomResponseStatus.SUCCESS.getStatus()).message(CustomResponseStatus.SUCCESS.getMessage())
         .data(bookService.deleteBookByAuthorName(bookauthorName)).build();
     }
     @GetMapping(value = "/getbyAuthorName", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CustomResponseEntity getBookByAuthorName(@ApiParam("bookauthorName") @RequestParam String bookauthorName) {
+    public CustomResponseEntity getBookByAuthorName(@NotBlank(message="please enter valid AuthoreName", groups = LevelOneValidation.class) @ApiParam("bookauthorName") @RequestParam String bookauthorName) {
         return CustomResponseEntity.builder().code(HttpStatus.OK.value())
         .status(CustomResponseStatus.SUCCESS.getStatus()).message(CustomResponseStatus.SUCCESS.getMessage())
         .data(bookService.getBookByAuthorName(bookauthorName)).build();
     }
 
     @GetMapping(value="/getbybookname", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CustomResponseEntity getBookByBookName(@ApiParam("bookName") @RequestParam String bookName) {
+    public CustomResponseEntity getBookByBookName(@NotBlank(message="please enter valid BookName", groups = LevelOneValidation.class)@ApiParam("bookName") @RequestParam String bookName) {
         return CustomResponseEntity.builder().code(HttpStatus.OK.value())
         .status(CustomResponseStatus.SUCCESS.getStatus()).message(CustomResponseStatus.SUCCESS.getMessage())
         .data(bookService.getBookByBookName(bookName)).build();
     }
     @GetMapping(value="/getbybookPrice", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CustomResponseEntity getBookByBookPrice(@ApiParam("bookprice") @RequestParam Double bookprice) {
+    public CustomResponseEntity getBookByBookPrice(@NotNull(message="please enter valid bookPrice", groups = LevelOneValidation.class)@ApiParam("bookprice") @RequestParam Double bookprice) {
         return CustomResponseEntity.builder().code(HttpStatus.OK.value())
         .status(CustomResponseStatus.SUCCESS.getStatus()).message(CustomResponseStatus.SUCCESS.getMessage())
         .data(bookService.getBookByBookPrice(bookprice)).build();
     }
-    @GetMapping(value="/getbybookPriceRange", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CustomResponseEntity getBookByBookPriceRange(@ApiParam("bookprice") @RequestParam Double bookprice) {
-        return CustomResponseEntity.builder().code(HttpStatus.OK.value())
-        .status(CustomResponseStatus.SUCCESS.getStatus()).message(CustomResponseStatus.SUCCESS.getMessage())
-        .data(bookService.getBookByBookPriceRange(bookprice)).build();
-    }
+    
 
     @GetMapping("/getbyAuthorNameAndBookName")
     public CustomResponseEntity getBookByAuthorNameAndBookName(@ApiParam("bookauthorName") @RequestParam String bookauthorName,@ApiParam("bookname") @RequestParam String bookname) {

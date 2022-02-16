@@ -25,17 +25,8 @@ public interface BookRepository extends JpaRepository<Book, Long>  {
     @Query(value = "SELECT * FROM book WHERE book_price = ?1", nativeQuery = true)
     List<Book> findByBookPriceGreaterThan(Double bookPrice);
 
-    // @Query(value = "SELECT * FROM book WHERE  book_price BETWEEN ?1 AND ?2", nativeQuery = true)
     List<Book> findByBookPriceBetween(Double bookPrice1, Double bookPrice2);
     
-    
-
-    @Query(value = "SELECT * FROM book WHERE book_price > ?1", nativeQuery = true)
-    List<Book> findByBookPriceGreaterThanEqual(Double bookPrice);
-
-    // List<Book> findByBookauthorNameAndBookname(String bookauthorName, String bookname);
-
-    // @Query(value = "SELECT * FROM book WHERE book_author_name = ?1 and book_name = ?2", nativeQuery = true)
     List<Book> findByBookauthorNameAndBookName(String bookauthorName, String bookName);
 
     Object countByBookauthorName(String bookauthorName);

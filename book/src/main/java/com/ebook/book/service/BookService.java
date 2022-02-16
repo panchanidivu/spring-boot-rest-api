@@ -125,15 +125,7 @@ public class BookService {
         
     }
 
-    public List<BookResponseDTO> getBookByBookPriceRange(Double bookprice) {
-        List<Book> book =bookRepository.findByBookPriceGreaterThanEqual(Double.valueOf(bookprice));
-        List<BookResponseDTO> bookResponseDTOs = new ModelMapper().map(book, new TypeToken<List<BookResponseDTO>>() {}.getType());
-        if(bookResponseDTOs.isEmpty()) {
-            throw new CustomException("No books found", HttpStatus.NOT_FOUND.value(),HttpStatus.NOT_FOUND);
-        }
-        return bookResponseDTOs;
-        
-    }
+    
 
     public List<BookResponseDTO> getBookByAuthorNameAndBookName(String bookauthorName, String bookName) {
         List<Book> book =bookRepository.findByBookauthorNameAndBookName(bookauthorName, bookName);
