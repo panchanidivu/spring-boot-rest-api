@@ -40,6 +40,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/ebook")
 @Api(tags = "api")
 @RequiredArgsConstructor
+@Validated(MainLevelValidation.class)
 public class BookController {
 
     @Autowired
