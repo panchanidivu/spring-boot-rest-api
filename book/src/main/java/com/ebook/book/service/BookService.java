@@ -66,10 +66,10 @@ public class BookService {
         } throw new CustomException("Book not created", HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND); 
     }
 
-    public BookResponseDTO getBookById(String bookId) {
+    public List<BookResponseDTO> getBookById(String bookId) {
         
             List<Book> book =bookRepository.findByBookId(Long.valueOf(bookId));
-            BookResponseDTO bookResponseDTOs = new ModelMapper().map(book, new TypeToken<List<BookResponseDTO>>() {}.getType());
+            List<BookResponseDTO>  bookResponseDTOs = new ModelMapper().map(book, new TypeToken<List<BookResponseDTO>>() {}.getType());
             if(bookResponseDTOs == null) {
                 throw new CustomException("No books found", HttpStatus.NOT_FOUND.value(),HttpStatus.NOT_FOUND);
             }
