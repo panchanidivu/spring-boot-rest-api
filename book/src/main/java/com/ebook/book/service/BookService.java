@@ -66,14 +66,14 @@ public class BookService {
         } throw new CustomException("Book not created", HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND); 
     }
 
-    public List<BookResponseDTO> getBookById(String bookId) {
+    public BookResponseDTO getBookById(String bookId) {
         
             List<Book> book =bookRepository.findByBookId(Long.valueOf(bookId));
             List<BookResponseDTO>  bookResponseDTOs = new ModelMapper().map(book, new TypeToken<List<BookResponseDTO>>() {}.getType());
             if(bookResponseDTOs == null) {
                 throw new CustomException("No books found", HttpStatus.NOT_FOUND.value(),HttpStatus.NOT_FOUND);
             }
-            return bookResponseDTOs;
+            return bookResponseDTOs.get(0);
             
             
 
@@ -224,12 +224,6 @@ public class BookService {
         Map<Object, Boolean> map = new ConcurrentHashMap<>();
         return t -> map.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
     }
-
-    
-
-
-    
-
 
     
 }

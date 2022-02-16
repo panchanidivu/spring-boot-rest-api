@@ -112,7 +112,7 @@ public class BookController {
         .data(bookService.getBookByAuthorNameAndBookName(bookauthorName,bookname)).build();
     }
     @GetMapping("/getAllBooksWithPagination")
-    public CustomResponseEntity getAllBooksWithPagination(@Valid @ApiParam("offset") @RequestParam Integer offset,@ApiParam("pageSize") @RequestParam Integer pageSize) {
+    public CustomResponseEntity getAllBooksWithPagination( @ApiParam("offset") @RequestParam Integer offset,@ApiParam("pageSize") @RequestParam Integer pageSize) {
         return CustomResponseEntity.builder().code(HttpStatus.OK.value())
         .status(CustomResponseStatus.SUCCESS.getStatus()).message(CustomResponseStatus.SUCCESS.getMessage())
         .data(bookService.getAllBooksWithPagination(offset,pageSize)).build();
