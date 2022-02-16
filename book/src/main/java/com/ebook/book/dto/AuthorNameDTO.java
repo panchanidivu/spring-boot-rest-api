@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 public class AuthorNameDTO {
 
     @ApiModelProperty(position = 0)
-    private String bookName;
+    private String bookauthorName;
 
     @ApiModelProperty(position = 1)
     private int bookCount;

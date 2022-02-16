@@ -211,12 +211,15 @@ public class BookService {
     }
 
 
-    public List<AuthorNameDTO> getAllBookName() {
+    public List<AuthorNameDTO> getAllAuthorName() {
         List<AuthorNameDTO> authorNameDTOs = new ArrayList<>();
         List<Book> book =bookRepository.findAll();
+        if(book.isEmpty()) {
+            throw new CustomException("No books found", HttpStatus.NOT_FOUND.value(),HttpStatus.NOT_FOUND);
+        }
         book.forEach(b->{
             AuthorNameDTO authorNameDTO = new AuthorNameDTO();
-            authorNameDTO.setBookName(b.getBookName());
+            authorNameDTO.setBookauthorName(b.getBookauthorName());
             authorNameDTO.setBookCount(bookRepository.findByBookNameContaining(b.getBookName()).size());
             authorNameDTOs.add(authorNameDTO);
         });
