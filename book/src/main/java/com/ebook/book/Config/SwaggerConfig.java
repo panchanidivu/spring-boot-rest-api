@@ -44,8 +44,18 @@ public class SwaggerConfig implements WebMvcConfigurer {
         .select()
         .apis(RequestHandlerSelectors.basePackage("com.ebook.book.controller"))
         .paths(PathSelectors.any())
-        .build();
+        .build()
+        .apiInfo(apiInfo());
         
+    }
+    private ApiInfo apiInfo() {
+        return new ApiInfo(
+          "EBook management API", 
+          "Some custom description of API.", 
+          "API TOS", 
+          "Terms of service", 
+          new Contact("divyesh patel", "www.example.com", "xyz@asd.com"), 
+          "License of API", "API license URL", Collections.emptyList());
     }
     
     
