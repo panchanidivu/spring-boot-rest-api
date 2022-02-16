@@ -3,7 +3,11 @@ package com.ebook.book.service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 import com.ebook.book.dto.AuthorNameDTO;
 import com.ebook.book.dto.BookDTO;
@@ -214,16 +218,18 @@ public class BookService {
     public List<AuthorNameDTO> getAllAuthorName() {
         List<AuthorNameDTO> authorNameDTOs = new ArrayList<>();
         List<Book> book =bookRepository.findAll();
-        if(book.isEmpty()) {
-            throw new CustomException("No books found", HttpStatus.NOT_FOUND.value(),HttpStatus.NOT_FOUND);
-        }
-        book.forEach(b->{
+        book.stream().filter(distinctByKey(Book::getBookauthorName)).forEach(book1 -> {
             AuthorNameDTO authorNameDTO = new AuthorNameDTO();
-            authorNameDTO.setBookauthorName(b.getBookauthorName());
-            authorNameDTO.setBookCount(bookRepository.findByBookNameContaining(b.getBookName()).size());
+            authorNameDTO.setBookauthorName(book1.getBookauthorName());
+            authorNameDTO.setBookCount(bookRepository.findByBookauthorNameContaining(book1.getBookauthorName()).size());
             authorNameDTOs.add(authorNameDTO);
         });
         return authorNameDTOs;
+    }
+
+    private Predicate<? super Book> distinctByKey(Function<? super Book, ?> keyExtractor) {
+        Map<Object, Boolean> map = new ConcurrentHashMap<>();
+        return t -> map.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
     }
     
 }

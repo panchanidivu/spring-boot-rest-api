@@ -42,7 +42,10 @@ public interface BookRepository extends JpaRepository<Book, Long>  {
 
     public List<Book> findByBookNameContaining(String bookName);
 
-    
+
+    public List<Book> findByBookauthorNameContaining(String bookauthorName);
+
+
    
     
     
