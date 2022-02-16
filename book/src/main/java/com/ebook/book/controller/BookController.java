@@ -79,7 +79,7 @@ public class BookController {
     }
     
     @DeleteMapping(value="/deletebyAuthorName", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CustomResponseEntity deleteBookByAuthorName(@NotBlank@NotBlank(message="please enter valid AuthoreName", groups = LevelOneValidation.class) @ApiParam("bookauthorName") @RequestParam String bookauthorName) {
+    public CustomResponseEntity deleteBookByAuthorName(@NotBlank(message="please enter valid AuthoreName", groups = LevelOneValidation.class) @ApiParam("bookauthorName") @RequestParam String bookauthorName) {
         return CustomResponseEntity.builder().code(HttpStatus.OK.value())
         .status(CustomResponseStatus.SUCCESS.getStatus()).message(CustomResponseStatus.SUCCESS.getMessage())
         .data(bookService.deleteBookByAuthorName(bookauthorName)).build();
@@ -118,7 +118,7 @@ public class BookController {
         .data(bookService.getAllBooksWithPagination(offset,pageSize)).build();
     }
     @PutMapping("/updateBook")
-    public CustomResponseEntity updateBook(@ApiParam("bookDTO") @RequestBody  BookDTO bookDTO) {
+    public CustomResponseEntity updateBook(@Validated(MainLevelValidation.class) @ApiParam("bookDTO") @RequestBody  BookDTO bookDTO) {
         return CustomResponseEntity.builder().code(HttpStatus.OK.value())
         .status(CustomResponseStatus.SUCCESS.getStatus()).message(CustomResponseStatus.SUCCESS.getMessage())
         .data(bookService.updateBook(bookDTO)).build();
@@ -132,7 +132,7 @@ public class BookController {
     }
 
     @GetMapping(value="/CountByBookAuthorName", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CustomResponseEntity countByBookAuthorName(@ApiParam("bookauthorName") @RequestParam String bookauthorName) {
+    public CustomResponseEntity countByBookAuthorName(@NotBlank(message="please enter valid AuthoreName", groups = LevelOneValidation.class)@ApiParam("bookauthorName") @RequestParam String bookauthorName) {
         return CustomResponseEntity.builder().code(HttpStatus.OK.value())
         .status(CustomResponseStatus.SUCCESS.getStatus()).message(CustomResponseStatus.SUCCESS.getMessage())
         .data(bookService.countByBookAuthorName(bookauthorName)).build();
