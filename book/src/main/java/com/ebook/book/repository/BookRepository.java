@@ -36,6 +36,9 @@ public interface BookRepository extends JpaRepository<Book, Long>  {
 
     public List<Book> findByBookauthorNameContaining(String bookauthorName);
 
+    @Query(value = "SELECT DISTINCT book_author_name FROM book", nativeQuery = true)
+    List<Book> findDistinctByBookauthorName();
+
 
    
     

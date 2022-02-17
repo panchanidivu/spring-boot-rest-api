@@ -47,7 +47,6 @@ public class BookController {
     @Autowired
     BookService bookService;
 
-    
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public CustomResponseEntity getAllBooks() {
         return CustomResponseEntity.builder().code(HttpStatus.OK.value())

@@ -1,7 +1,9 @@
 package com.ebook.book.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -16,6 +18,7 @@ import com.ebook.book.model.Book;
 import com.ebook.book.repository.BookRepository;
 import com.ebook.book.response.CustomException;
 import com.ebook.book.response.ObjectMapperUtils;
+import com.ebook.book.response.CustomResponseEntity.CustomResponseEntityBuilder;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -26,6 +29,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -137,14 +141,14 @@ public class BookService {
         
     }
 
-    public List<BookResponseDTO> getAllBooksWithPagination(Integer offset, Integer pageSize) {
-        List<Book> books = bookRepository.findAll(PageRequest.of(offset, pageSize)).getContent();
-        List<BookResponseDTO> bookResponseDTOs = new ModelMapper().map(books, new TypeToken<List<BookResponseDTO>>() {}.getType());
+    public Page<Book> getAllBooksWithPagination(Integer offset, Integer pageSize) {
+        Page<Book> books = bookRepository.findAll(PageRequest.of(offset, pageSize));
+        List<BookResponseDTO> bookResponseDTOs = new ModelMapper().map(books.getContent(), new TypeToken<List<BookResponseDTO>>() {}.getType());
         if(bookResponseDTOs.isEmpty()) {
             throw new CustomException("No books found", HttpStatus.NOT_FOUND.value(),HttpStatus.NOT_FOUND);
         }
-        return bookResponseDTOs;
-        
+        return books;
+         
     }
 
     public BookResponseDTO updateBook(BookDTO bookDTO) {
@@ -225,5 +229,4 @@ public class BookService {
         return t -> map.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
     }
 
-    
 }

@@ -28,7 +28,7 @@ import lombok.ToString;
 @Entity
 @Table(name = "book")
 public class Book {
-
+    //Entity class for Book table
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "book_id")
