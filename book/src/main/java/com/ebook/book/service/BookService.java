@@ -143,10 +143,6 @@ public class BookService {
 
     public Page<Book> getAllBooksWithPagination(Integer offset, Integer pageSize) {
         Page<Book> books = bookRepository.findAll(PageRequest.of(offset, pageSize));
-        List<BookResponseDTO> bookResponseDTOs = new ModelMapper().map(books.getContent(), new TypeToken<List<BookResponseDTO>>() {}.getType());
-        if(bookResponseDTOs.isEmpty()) {
-            throw new CustomException("No books found", HttpStatus.NOT_FOUND.value(),HttpStatus.NOT_FOUND);
-        }
         return books;
          
     }
