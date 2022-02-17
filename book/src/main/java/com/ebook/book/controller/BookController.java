@@ -72,7 +72,7 @@ public class BookController {
         .data(bookService.getBookById(bookId)).build();
     }
 
-    @DeleteMapping("/deleteByBookId")
+    @DeleteMapping(value = "/deleteByBookId", produces = MediaType.APPLICATION_JSON_VALUE)
     public CustomResponseEntity deleteBook(@NotBlank(message="please enter the only BookId", groups = LevelOneValidation.class)@Pattern(regexp = "^[0-9]*$", message = "Only numeric characters are allowed" ,groups = LevelTwoValidation.class) @ApiParam("bookId") @RequestParam String bookId) throws ParseException {
         return CustomResponseEntity.builder().code(HttpStatus.OK.value())
         .status(CustomResponseStatus.SUCCESS.getStatus()).message(CustomResponseStatus.SUCCESS.getMessage())
@@ -106,19 +106,19 @@ public class BookController {
     }
     
 
-    @GetMapping("/getbyAuthorNameAndBookName")
+    @GetMapping(value = "/getbyAuthorNameAndBookName", produces = MediaType.APPLICATION_JSON_VALUE)
     public CustomResponseEntity getBookByAuthorNameAndBookName(@ApiParam("bookauthorName") @RequestParam String bookauthorName,@ApiParam("bookname") @RequestParam String bookname) {
         return CustomResponseEntity.builder().code(HttpStatus.OK.value())
         .status(CustomResponseStatus.SUCCESS.getStatus()).message(CustomResponseStatus.SUCCESS.getMessage())
         .data(bookService.getBookByAuthorNameAndBookName(bookauthorName,bookname)).build();
     }
-    @GetMapping("/getAllBooksWithPagination")
+    @GetMapping(value = "/getAllBooksWithPagination", produces = MediaType.APPLICATION_JSON_VALUE)
     public CustomResponseEntity getAllBooksWithPagination( @ApiParam("offset") @RequestParam Integer offset,@ApiParam("pageSize") @RequestParam Integer pageSize) {
         return CustomResponseEntity.builder().code(HttpStatus.OK.value())
         .status(CustomResponseStatus.SUCCESS.getStatus()).message(CustomResponseStatus.SUCCESS.getMessage())
         .data(bookService.getAllBooksWithPagination(offset,pageSize)).build();
     }
-    @PutMapping("/updateBook")
+    @PutMapping(value = "/updateBook", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public CustomResponseEntity updateBook(@Validated(MainLevelValidation.class) @ApiParam("bookDTO") @RequestBody  BookDTO bookDTO) {
         return CustomResponseEntity.builder().code(HttpStatus.OK.value())
         .status(CustomResponseStatus.SUCCESS.getStatus()).message(CustomResponseStatus.SUCCESS.getMessage())
