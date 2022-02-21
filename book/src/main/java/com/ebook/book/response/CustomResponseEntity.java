@@ -1,5 +1,7 @@
 package com.ebook.book.response;
 
+import org.springframework.http.HttpStatus;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,4 +20,9 @@ public class CustomResponseEntity{
 	private String message;
 	
 	private Object data;
+
+	public CustomResponseEntity status(HttpStatus status2) {
+		this.status = status2.value();
+		return this;
+    }
 }
