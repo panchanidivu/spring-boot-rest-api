@@ -72,15 +72,12 @@ public class BookService {
 
     public BookResponseDTO getBookById(String bookId) {
         
-            List<Book> book =bookRepository.findByBookId(Long.valueOf(bookId));
-            List<BookResponseDTO>  bookResponseDTOs = new ModelMapper().map(book, new TypeToken<List<BookResponseDTO>>() {}.getType());
-            if(bookResponseDTOs == null) {
-                throw new CustomException("No books found", HttpStatus.NOT_FOUND.value(),HttpStatus.NOT_FOUND);
+            Optional<Book> book = bookRepository.findById(Long.valueOf(bookId));
+            if(book.isPresent()) {
+                BookResponseDTO bookResponseDTO = ObjectMapperUtils.map(book.get(), BookResponseDTO.class);
+                return bookResponseDTO;
             }
-            return bookResponseDTOs.get(0);
-            
-            
-
+            throw new CustomException("Book not found", HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND);
         
     }
 
