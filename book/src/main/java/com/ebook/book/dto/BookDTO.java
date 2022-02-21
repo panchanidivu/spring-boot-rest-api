@@ -22,7 +22,7 @@ public class BookDTO {
 
     @ApiModelProperty(position = 1)
     @NotBlank(message = "Book name is required", groups = LevelOneValidation.class)
-    @Pattern(regexp = "^[a-zA-Z]*$", message = "Only alphanumeric characters are allowed", groups = LevelTwoValidation.class)
+    @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "Only alphanumeric characters are allowed", groups = LevelTwoValidation.class)
     private String bookName;
 
     @ApiModelProperty(position = 2)
