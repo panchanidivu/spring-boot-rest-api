@@ -74,11 +74,11 @@ public class BookService {
     public BookResponseDTO getBookById(String bookId) {
         
             Optional<Book> book = bookRepository.findById(Long.valueOf(bookId));
-            if(book.isPresent()) {
-                BookResponseDTO bookResponseDTO = ObjectMapperUtils.map(book.get(), BookResponseDTO.class);
-                return bookResponseDTO;
+            BookResponseDTO bookResponseDTO = new ModelMapper().map(book.get(), BookResponseDTO.class);
+            if(bookResponseDTO == null) {
+                throw new CustomException("Book not found", HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND);
             }
-            throw new CustomException("Book not found", HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND);
+            return bookResponseDTO;
         
     }
 
