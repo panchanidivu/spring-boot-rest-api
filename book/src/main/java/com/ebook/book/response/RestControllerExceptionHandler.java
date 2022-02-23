@@ -9,7 +9,7 @@ import org.springframework.web.context.request.WebRequest;
 @RestControllerAdvice
 public class RestControllerExceptionHandler {
     @ExceptionHandler(CustomException.class)
-    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public CustomResponseEntity handleCustomException(CustomException ex,WebRequest request) {
         return CustomResponseEntity.builder().code(ex.getHttpStatusCode())
                 .status(CustomResponseStatus.FAILURE.getStatus()).message(ex.getMessage()).build();
