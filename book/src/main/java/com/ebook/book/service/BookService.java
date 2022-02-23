@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -207,19 +208,26 @@ public class BookService {
     public List<AuthorNameDTO> getAllAuthorName() {
         List<AuthorNameDTO> authorNameDTOs = new ArrayList<>();
         List<Book> book =bookRepository.findAll();
-        book.stream().filter(distinctByKey(Book::getBookauthorName)).forEach(book1 -> {
+        HashSet<String> authorNames = new HashSet<>();
+        for(Book book1:book) {
+            authorNames.add(book1.getBookauthorName());
+        }
+        for(String authorName:authorNames) {
             AuthorNameDTO authorNameDTO = new AuthorNameDTO();
-            authorNameDTO.setBookauthorName(book1.getBookauthorName());
-            authorNameDTO.setBookCount(bookRepository.findByBookauthorNameContaining(book1.getBookauthorName()).size());
+            authorNameDTO.setBookauthorName(authorName);
+            authorNameDTO.setBookCount(bookRepository.findByBookauthorNameContaining(authorName).size());
             authorNameDTOs.add(authorNameDTO);
-        });
+        }
         return authorNameDTOs;
+        // book.stream().filter(distinctByKey(Book::getBookauthorName)).forEach(book1 -> {
+        //     AuthorNameDTO authorNameDTO = new AuthorNameDTO();
+        //     authorNameDTO.setBookauthorName(book1.getBookauthorName());
+        //     authorNameDTO.setBookCount(bookRepository.findByBookauthorNameContaining(book1.getBookauthorName()).size());
+        //     authorNameDTOs.add(authorNameDTO);
+        // });
+        // return authorNameDTOs;
     }
 
 
-    private Predicate<? super Book> distinctByKey(Function<? super Book, ?> keyExtractor) {
-        Map<Object, Boolean> map = new ConcurrentHashMap<>();
-        return t -> map.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
-    }
 
 }
