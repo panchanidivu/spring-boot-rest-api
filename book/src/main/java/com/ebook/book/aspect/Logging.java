@@ -47,11 +47,7 @@ public class Logging {
         logger.info("Exception: {}",exception);
     }
 
-    // @Around("pointCutDeclaration()")
-    // private void around(JoinPoint joinPoint){
-    //     logger.info("Around method: {}",joinPoint.getSignature().getName());
-    //     logger.info("around execution of {}:{}", joinPoint.getSignature().getDeclaringType(), joinPoint);
-    // }
+    
     
     @Around("pointCutDeclaration()")
     private Object around(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
