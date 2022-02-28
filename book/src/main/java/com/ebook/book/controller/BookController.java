@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,11 +43,11 @@ import lombok.RequiredArgsConstructor;
 @Api(tags = "api")
 @RequiredArgsConstructor
 @Validated(MainLevelValidation.class)
+@CrossOrigin(origins = "http://localhost:9000",methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 public class BookController {
 
     @Autowired
     BookService bookService;
-
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public CustomResponseEntity getAllBooks() {
         return CustomResponseEntity.builder().code(HttpStatus.OK.value())
