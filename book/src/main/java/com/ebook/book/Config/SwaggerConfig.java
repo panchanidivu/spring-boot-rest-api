@@ -17,6 +17,7 @@ import springfox.documentation.spring.web.WebMvcRequestHandler;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -46,6 +47,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
         .paths(PathSelectors.any())
         .build()
         .apiInfo(apiInfo());
+        // .securitySchemes(basicScheme());
         
     }
     private ApiInfo apiInfo() {
@@ -57,6 +59,14 @@ public class SwaggerConfig implements WebMvcConfigurer {
           new Contact("divyesh patel", "www.divyesh.com", "xyz@asd.com"), 
           "License of API", "API license URL", Collections.emptyList());
     }
+    
+    
+    
+    //   private List<SecurityScheme> basicScheme() {
+    //     List<SecurityScheme> schemeList = new ArrayList<>();
+    //     schemeList.add(new BasicAuth("basicAuth"));
+    //     return schemeList;
+    // }
     
     
 
