@@ -53,10 +53,16 @@ public class Book {
     @Temporal(TemporalType.TIMESTAMP)
     private Date bookcreatedDate;
 
+    @Column(name = "email_id",nullable = false)
+    private String emailId;
 
     @UpdateTimestamp
     @Column(name = "updated_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
+
+    public String getBookEmail() {
+        return null;
+    }
     
 }

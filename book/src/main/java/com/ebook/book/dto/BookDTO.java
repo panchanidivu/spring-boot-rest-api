@@ -37,4 +37,8 @@ public class BookDTO {
     @ApiModelProperty(position = 4)
     @NotNull(message = "Book price is required", groups = LevelOneValidation.class)
     private Double bookPrice;
+
+    @ApiModelProperty(position = 5)
+    @NotNull(message = "Book created date is required", groups = LevelOneValidation.class)
+    private String emailId;
 }
