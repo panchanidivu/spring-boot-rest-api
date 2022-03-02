@@ -131,8 +131,8 @@ public class BookService {
         "</body>\n" +
         "</html>\n";
         helper.setText(html, true);
-        FileSystemResource file = new FileSystemResource(new File("/Users/divyeshpanchani/Desktop/github/spring-boot-/book/src/main/resources/divyesh resume .pages"));
-        helper.addAttachment("/Users/divyeshpanchani/Desktop/github/spring-boot-/book/src/main/resources/divyesh resume .pages", file);
+        FileSystemResource file = new FileSystemResource(new File("/Users/divyeshpanchani/Desktop/github/spring-boot-/book/src/main/resources/divu.jpeg"));
+        helper.addAttachment("/Users/divyeshpanchani/Desktop/github/spring-boot-/book/src/main/resources/divu.jpeg", file);
         helper.setTo(toEmail);
         helper.setFrom("panchanidivyesh@gmail.com");
         mailSender.send(mimeMessage);
