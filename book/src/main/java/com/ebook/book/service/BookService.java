@@ -31,6 +31,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -42,6 +44,8 @@ public class BookService {
     @Autowired
     BookRepository bookRepository;
 
+    @Autowired
+    private JavaMailSender mailSender;
     
 
     public List<BookResponseDTO>getAllBooks() {
@@ -65,11 +69,34 @@ public class BookService {
             book.setBookcreatedDate(new Date());
             book.setUpdatedDate(new Date());
             bookRepository.save(book);
+            String body = "Respected Author your book " +" "+ bookDTO.getBookName() + " is added successfully";
+            String subject = "Book added successfully";
+            String toEmail = bookDTO.getEmailId();
+            System.out.println("toEmail"+toEmail);
+            sendSimpleEmail(toEmail,body,subject);
             return "Book added successfully";
             
 
         } throw new CustomException("Book not created", HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND); 
     }
+
+    
+
+
+    private void sendSimpleEmail(String toEmail, String body, String subject) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("panchanidivyesh@gmail.com");
+        message.setTo(toEmail);
+        message.setText(body);
+        message.setSubject(subject);
+        mailSender.send(message);
+        System.out.println("Mail Send...");
+
+    }
+
+
+    
+
 
     public BookResponseDTO getBookById(String bookId) {
         
@@ -158,6 +185,7 @@ public class BookService {
         book1.setBookPrice(bookDTO.getBookPrice());
         book1.setUpdatedDate(new Date());
         book1.setBookcreatedDate(book.get().getBookcreatedDate());
+        book1.setEmailId(bookDTO.getEmailId());
         Book book2 = bookRepository.save(book1);
 
         bookResponseDTO.setBookName(book2.getBookName());
@@ -165,6 +193,11 @@ public class BookService {
         bookResponseDTO.setBookTotalPages(book2.getBookTotalPages());
         bookResponseDTO.setBookPrice(book2.getBookPrice());
         bookResponseDTO.setBookId(book2.getBookId());
+        String body = "Respected Author your book " +" "+ bookDTO.getBookName() + " is update successfully";
+        String subject = "Book added successfully";
+        String toEmail = bookDTO.getEmailId();
+        System.out.println("toEmail"+toEmail);
+        sendSimpleEmail(toEmail,body,subject);
 
         return bookResponseDTO;
        
