@@ -194,7 +194,7 @@ public class BookService {
         bookResponseDTO.setBookPrice(book2.getBookPrice());
         bookResponseDTO.setBookId(book2.getBookId());
         String body = "Respected Author your book " +" "+ bookDTO.getBookName() + " is update successfully";
-        String subject = "Book added successfully";
+        String subject = "Book update successfully";
         String toEmail = bookDTO.getEmailId();
         System.out.println("toEmail"+toEmail);
         sendSimpleEmail(toEmail,body,subject);
