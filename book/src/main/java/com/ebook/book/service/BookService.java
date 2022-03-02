@@ -1,5 +1,6 @@
 package com.ebook.book.service;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -11,6 +12,10 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.function.Predicate;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import javax.swing.Renderer;
 
 import com.ebook.book.dto.AuthorNameDTO;
 import com.ebook.book.dto.BookDTO;
@@ -24,6 +29,7 @@ import com.ebook.book.response.CustomResponseEntity.CustomResponseEntityBuilder;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -33,8 +39,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.TemplateEngine;
 
+import ch.qos.logback.core.joran.event.BodyEvent;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -46,6 +55,8 @@ public class BookService {
 
     @Autowired
     private JavaMailSender mailSender;
+
+    
     
 
     public List<BookResponseDTO>getAllBooks() {
@@ -73,7 +84,12 @@ public class BookService {
             String subject = "Book added successfully";
             String toEmail = bookDTO.getEmailId();
             System.out.println("toEmail"+toEmail);
-            sendSimpleEmail(toEmail,body,subject);
+            try {
+                sendSimpleEmail(toEmail,body,subject);
+            } catch (MessagingException e) {
+                
+                e.printStackTrace();
+            }
             return "Book added successfully";
             
 
@@ -83,20 +99,45 @@ public class BookService {
     
 
 
-    private void sendSimpleEmail(String toEmail, String body, String subject) {
+    private void sendSimpleEmails(String toEmail, String body, String subject) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("panchanidivyesh@gmail.com");
         message.setTo(toEmail);
-        message.setText(body);
+        String html = "<html><body>"; 
+        message.setText(html);
         message.setSubject(subject);
         mailSender.send(message);
         System.out.println("Mail Send...");
 
     }
-
-
-    
-
+    private void sendSimpleEmail(String toEmail, String body, String subject) throws MessagingException {
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage,true);
+        helper.setSubject("Book added successfully");
+        String html = "<!doctype html>\n" +
+        "<html lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\"\n" +
+        "      xmlns:th=\"http://www.thymeleaf.org\">\n" +
+        "<head>\n" +
+        "    <meta charset=\"UTF-8\">\n" +
+        "    <meta name=\"viewport\"\n" +
+        "          content=\"width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0\">\n" +
+        "    <meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge\">\n" +
+        "    <title>Email</title>\n" +
+        "</head>\n" +
+        "<body>\n" +
+        "<div>Welcome <b>" +"<h1>"+ body + "</h1>"+ "</b></div>\n" +
+        "\n" +
+        "<div> Your username is <b>"   +
+        "</body>\n" +
+        "</html>\n";
+        helper.setText(html, true);
+        FileSystemResource file = new FileSystemResource(new File("/Users/divyeshpanchani/Desktop/github/spring-boot-/book/src/main/resources/divyesh resume .pages"));
+        helper.addAttachment("/Users/divyeshpanchani/Desktop/github/spring-boot-/book/src/main/resources/divyesh resume .pages", file);
+        helper.setTo(toEmail);
+        helper.setFrom("panchanidivyesh@gmail.com");
+        mailSender.send(mimeMessage);
+        
+    }
 
     public BookResponseDTO getBookById(String bookId) {
         
@@ -197,7 +238,12 @@ public class BookService {
         String subject = "Book update successfully";
         String toEmail = bookDTO.getEmailId();
         System.out.println("toEmail"+toEmail);
-        sendSimpleEmail(toEmail,body,subject);
+        try {
+            sendSimpleEmail(toEmail,body,subject);
+        } catch (MessagingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
         return bookResponseDTO;
        
