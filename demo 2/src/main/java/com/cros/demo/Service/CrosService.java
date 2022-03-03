@@ -33,8 +33,9 @@ public class CrosService {
         headers.setBasicAuth(environment.getProperty("username"), environment.getProperty("password"));
         // headers.setBasicAuth(username, password);
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), String.class);
-        return response;
+        return restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), String.class);
+        // ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), String.class);
+        // return response;
     }
 
     public ResponseEntity<String> getByBookId(String bookId) {
