@@ -10,11 +10,13 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import com.ebook.book.dto.BookDTO;
+import com.ebook.book.dto.UserDto;
 import com.ebook.book.model.Book;
 import com.ebook.book.response.CustomException;
 import com.ebook.book.response.CustomResponseEntity;
 import com.ebook.book.response.CustomResponseStatus;
 import com.ebook.book.service.BookService;
+import com.ebook.book.service.UserService;
 import com.ebook.book.validation.LevelOneValidation;
 import com.ebook.book.validation.LevelTwoValidation;
 import com.ebook.book.validation.MainLevelValidation;
@@ -45,6 +47,9 @@ import lombok.RequiredArgsConstructor;
 @Validated(MainLevelValidation.class)
 @CrossOrigin(origins = "http://localhost:9000",methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 public class BookController {
+
+    @Autowired
+    UserService userService;
 
     @Autowired
     BookService bookService;
@@ -147,6 +152,8 @@ public class BookController {
         .status(CustomResponseStatus.SUCCESS.getStatus()).message(CustomResponseStatus.SUCCESS.getMessage())
         .data(bookService.searchByBookName(bookname)).build();
     }
+
+    
     
 
    

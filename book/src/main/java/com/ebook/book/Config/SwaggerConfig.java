@@ -46,6 +46,11 @@ public class SwaggerConfig implements WebMvcConfigurer {
         .apis(RequestHandlerSelectors.basePackage("com.ebook.book.controller"))
         .paths(PathSelectors.any())
         .build()
+        .useDefaultResponseMessages(false)//
+        .securitySchemes(Collections.singletonList(apiKey()))
+        .securityContexts(Collections.singletonList(securityContext()))
+        .genericModelSubstitutes(Optional.class).pathMapping("/")
+
         .apiInfo(apiInfo());
         // .securitySchemes(basicScheme());
         
@@ -62,11 +67,24 @@ public class SwaggerConfig implements WebMvcConfigurer {
     
     
     
-    //   private List<SecurityScheme> basicScheme() {
-    //     List<SecurityScheme> schemeList = new ArrayList<>();
-    //     schemeList.add(new BasicAuth("basicAuth"));
-    //     return schemeList;
-    // }
+    private ApiKey apiKey() {
+        return new ApiKey("Authorization", "Authorization", "header");
+      }
+
+    private SecurityContext securityContext() {
+        return SecurityContext.builder()
+            .securityReferences(defaultAuth())
+            .forPaths(PathSelectors.any())
+            .build();
+    }
+    
+    private List<SecurityReference> defaultAuth() {
+        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
+        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+        authorizationScopes[0] = authorizationScope;
+        return Arrays.asList(new SecurityReference("Authorization", authorizationScopes));
+      }
+    
     
     
 

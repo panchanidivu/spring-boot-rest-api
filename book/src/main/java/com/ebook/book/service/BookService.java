@@ -41,7 +41,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.TemplateEngine;
+
 
 import ch.qos.logback.core.joran.event.BodyEvent;
 import lombok.RequiredArgsConstructor;
