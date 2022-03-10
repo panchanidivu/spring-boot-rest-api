@@ -1,8 +1,10 @@
 package com.ebook.book.controller;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.GroupSequence;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -21,6 +23,7 @@ import com.ebook.book.validation.LevelOneValidation;
 import com.ebook.book.validation.LevelTwoValidation;
 import com.ebook.book.validation.MainLevelValidation;
 
+import org.mapstruct.Context;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -151,6 +154,12 @@ public class BookController {
         return CustomResponseEntity.builder().code(HttpStatus.OK.value())
         .status(CustomResponseStatus.SUCCESS.getStatus()).message(CustomResponseStatus.SUCCESS.getMessage())
         .data(bookService.searchByBookName(bookname)).build();
+    }
+    @GetMapping(value ="/dwonloadBookCsv", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CustomResponseEntity downloadBookCsv(@Context HttpServletResponse httpServletResponse) throws IOException {
+        return CustomResponseEntity.builder().code(HttpStatus.OK.value())
+        .status(CustomResponseStatus.SUCCESS.getStatus()).message(CustomResponseStatus.SUCCESS.getMessage())
+        .data(bookService.downloadBookCsv(httpServletResponse)).build();
     }
 
     

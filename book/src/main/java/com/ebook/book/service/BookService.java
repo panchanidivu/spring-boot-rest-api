@@ -1,6 +1,8 @@
 package com.ebook.book.service;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -15,6 +17,7 @@ import java.util.function.Predicate;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletResponse;
 import javax.swing.Renderer;
 
 import com.ebook.book.dto.AuthorNameDTO;
@@ -25,7 +28,10 @@ import com.ebook.book.repository.BookRepository;
 import com.ebook.book.response.CustomException;
 import com.ebook.book.response.ObjectMapperUtils;
 import com.ebook.book.response.CustomResponseEntity.CustomResponseEntityBuilder;
+import com.google.common.net.HttpHeaders;
 
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -306,6 +312,36 @@ public class BookService {
         // });
         // return authorNameDTOs;
     }
+
+
+    public BookService(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
+    }
+
+    public void writeTOCsv(Writer writer){
+        try {
+            writer.write("BookID,Book Name,Book Author Name,Book Total Pages,Book Price,Book Created Date,Book Updated Date,Email Id");
+            writer.write("\n");
+            List<Book> book =bookRepository.findAll();
+            for(Book book1:book) {
+                writer.write(book1.getBookId()+","+book1.getBookName()+","+book1.getBookauthorName()+","+book1.getBookTotalPages()+","+book1.getBookPrice()+","+book1.getBookcreatedDate()+","+book1.getUpdatedDate()+","+book1.getEmailId());
+                writer.write("\n");
+            }
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public Object downloadBookCsv(HttpServletResponse httpServletResponse) throws IOException {
+        httpServletResponse.setContentType("text/csv");
+        httpServletResponse.setHeader("Content-Disposition", "attachment; filename=\"books.csv\"");
+        writeTOCsv(httpServletResponse.getWriter());
+        return httpServletResponse;
+    }
+        
 
 
 
